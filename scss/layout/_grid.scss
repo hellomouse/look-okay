@@ -1,0 +1,152 @@
+//// ----------------------------------------------------------
+/// CSS Grids
+/// @group grid
+//// ----------------------------------------------------------
+
+@charset "utf-8";
+@use '../settings' as *;
+@use '../settings-post' as *;
+@use '../util/variants' as *;
+@use '../util/util';
+
+
+@if (not util.contains($blacklisted-modules, 'grid')) {
+
+    /** Fixed number of cols */
+    @for $col from 1 through $grid-cols {
+        @include variants($grid-prefix + 'cols-' + $col, $grid-variants) {
+            grid-template-columns: repeat($col, minmax(0, 1fr)) #{$important};
+        }
+    }
+
+    @include variants($grid-prefix + 'cols-none', $grid-variants) {
+        grid-template-columns: none #{$important};
+    }
+
+    
+    /** Col span */
+    @include variants('col-auto', $grid-variants) {
+        grid-column: auto #{$important};
+    }
+    @include variants('col-full', $grid-variants) {
+        grid-column: 1 / -1 #{$important};
+    }
+
+    @for $col from 1 through $grid-cols {
+        @include variants('col-span-' + $col, $grid-variants) {
+            grid-column: span #{$col} / span #{$col} #{$important};
+        }
+    }
+
+
+    /** Col start & end */
+    @include variants('col-start-auto', $grid-variants) {
+        grid-column-start: auto #{$important};
+    }
+    @include variants('col-end-auto', $grid-variants) {
+        grid-column-end: auto #{$important};
+    }
+
+    @for $col from 1 through ($grid-cols + 1) {
+        @include variants('col-start-' + $col, $grid-variants) {
+            grid-column-start: #{$col} #{$important};
+        }
+        @include variants('col-end-' + $col, $grid-variants) {
+            grid-column-end: #{$col} #{$important};
+        }
+    }
+
+
+    /** Fixed number of rows */
+    @for $row from 1 through $grid-rows {
+        @include variants($grid-prefix + 'rows-' + $row, $grid-variants) {
+            grid-template-rows: repeat($row, minmax(0, 1fr)) #{$important};
+        }
+    }
+
+    @include variants($grid-prefix + 'rows-none', $grid-variants) {
+        grid-template-rows: none #{$important};
+    }
+
+    
+    /** Rows span */
+    @include variants('row-auto', $grid-variants) {
+        grid-row: auto #{$important};
+    }
+    @include variants('row-full', $grid-variants) {
+        grid-row: 1 / -1 #{$important};
+    }
+
+    @for $row from 1 through $grid-rows {
+        @include variants('row-span-' + $row, $grid-variants) {
+            grid-row: span #{$row} / span #{$row} #{$important};
+        }
+    }
+
+
+    /** Row start & end */
+    @include variants('row-start-auto', $grid-variants) {
+        grid-row-start: auto #{$important};
+    }
+    @include variants('row-end-auto', $grid-variants) {
+        grid-row-end: auto #{$important};
+    }
+
+    @for $row from 1 through ($grid-rows + 1) {
+        @include variants('row-start-' + $row, $grid-variants) {
+            grid-row-start: #{$row} #{$important};
+        }
+        @include variants('row-end-' + $row, $grid-variants) {
+            grid-row-end: #{$row} #{$important};
+        }
+    }
+
+
+    /** Gaps */
+    /** General gaps first lower specificity */
+    @each $size, $size-val in $gap-sizes {
+        @include variants('gap-' + $size, $grid-variants) {
+            gap: $size-val #{$important};
+        }
+    }
+    /** X y gaps */
+    @each $size, $size-val in $gap-sizes {
+        @include variants('gap-x-' + $size, $grid-variants) {
+            column-gap: $size-val #{$important};
+        }
+        @include variants('gap-x-' + $size, $grid-variants) {
+            row-gap: $size-val #{$important};
+        }
+    }
+   
+    
+    /** Grid auto flow */
+    @include variants($grid-prefix + 'flow-row', $grid-variants) {
+        grid-auto-flow: row #{$important};
+    }
+    @include variants($grid-prefix + 'flow-col', $grid-variants) {
+        grid-auto-flow: column #{$important};
+    }
+    @include variants($grid-prefix + 'flow-row-dense', $grid-variants) {
+        grid-auto-flow: row dense #{$important};
+    }
+    @include variants($grid-prefix + 'flow-col-dense', $grid-variants) {
+        grid-auto-flow: column dense #{$important};
+    }
+
+
+    /** Auto rows & cols */
+    @each $prop, $prop-val in (
+        'auto': auto,
+        'min' : min-content,
+        'max' : max-content,
+        'fr'  : minmax(0, 1fr)
+    ) {
+        @include variants('auto-cols-' + $prop, $grid-variants) {
+            grid-auto-columns: $prop-val #{$important};
+        }
+        @include variants('auto-rows-' + $prop, $grid-variants) {
+            grid-auto-rows: $prop-val #{$important};
+        }
+    }
+}

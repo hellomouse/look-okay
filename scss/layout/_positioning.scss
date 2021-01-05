@@ -1,0 +1,93 @@
+//// ----------------------------------------------------------
+/// Element positioning
+/// @group layout
+//// ----------------------------------------------------------
+
+@charset "utf-8";
+@use '../settings' as *;
+@use '../settings-post' as *;
+@use '../util/variants' as *;
+@use '../util/util';
+
+
+@if (not util.contains($blacklisted-modules, 'layout-positioning')) {
+
+    /** 
+    * Clearfix. By exception, this class does not contain
+    * any variants
+    */
+    .#{$global-prefix}clearfix:before,
+    .#{$global-prefix}clearfix:after { 
+        clear: both;
+        content: ' ';
+        display: table;
+        overflow: hidden;
+    }
+
+
+    /** Floats */
+    @include variants('float-left',  $layout-positioning-variants) {
+        float: left  #{$important};
+    }
+    @include variants('float-right', $layout-positioning-variants) {
+        float: right #{$important};
+    }
+    @include variants('float-none',  $layout-positioning-variants) {
+        float: none  #{$important};
+    }
+
+
+    /** Center an element */
+    @include variants('vertical-center', $layout-positioning-variants) {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    @include variants('horizontal-center', $layout-positioning-variants) {
+        left: 50%;
+        position: relative;
+        transform: translateX(-50%);
+    }
+
+    @include variants('center', $layout-positioning-variants) {
+        left: 50%;
+        position: relative;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+
+    /** Display */
+    $display-variants: inline, inline-block, block, flow-root, contents,
+        flex, grid, inline-flex, inline-grid,  
+        table, inline-table, table-cell, table-caption, table-column-group, 
+        table-header-group, table-footer-group, table-row-group,
+        table-column, table-row;
+    @each $display-variant in $display-variants {
+        @include variants($display-variant, $layout-positioning-variants) {
+            display: $display-variant #{$important};
+        }
+    }
+
+    /** Align to side (Does not include position property) */
+    @each $size, $size-val in $positioning-sizes {
+        $t: map-get($positioning-prefixes, 'top');
+        $b: map-get($positioning-prefixes, 'bottom');
+        $l: map-get($positioning-prefixes, 'left');
+        $r: map-get($positioning-prefixes, 'right');
+
+        @include variants($t + '-' + $size, $layout-positioning-variants) { top: $size-val #{$important}; }
+        @include variants($b + '-' + $size, $layout-positioning-variants) { bottom: $size-val #{$important}; }
+        @include variants($l + '-' + $size, $layout-positioning-variants) { left: $size-val #{$important}; }
+        @include variants($r + '-' + $size, $layout-positioning-variants) { right: $size-val #{$important}; }
+    }
+
+
+    /** Positioning */
+    @include variants('relative', $layout-positioning-variants) { position: relative #{$important}; }
+    @include variants('absolute', $layout-positioning-variants) { position: absolute #{$important}; }
+    @include variants('fixed',    $layout-positioning-variants) { position: fixed #{$important}; }
+    @include variants('sticky',   $layout-positioning-variants) { position: sticky #{$important}; }
+    @include variants('static',   $layout-positioning-variants) { position: static #{$important}; }
+}

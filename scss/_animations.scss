@@ -1,0 +1,105 @@
+//// ----------------------------------------------------------
+/// Simple animation classes
+/// @group animations
+//// ----------------------------------------------------------
+
+@charset "utf-8";
+@use './util/util';
+@use './util/variants' as *;
+@use './settings' as *;
+@use './settings-post' as *;
+
+
+@if (not util.contains($blacklisted-modules, 'animations')) {
+
+    /** No animations at all */
+    @include variants('animate-none', $animation-variants) {
+        animation: none #{$important};
+    }
+
+
+    @if ($enable-animations) {
+        /** Rotate in place */
+        @keyframes animation-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @include variants('animate-spin', $animation-variants) {
+            animation: animation-spin $default-animation-duration linear infinite;
+        }
+
+
+        /** Bounce up and down in place */
+        @keyframes animation-bounce {
+            0%,
+            100% {
+                animation-timing-function: cubic-bezier(0.26, 0.64, 0.61, 1.09);
+                transform: translateY(0%);
+            }
+
+            50% {
+                animation-timing-function: cubic-bezier(0.57, -0.08, 0.96, 0.61);
+                transform: translateY(-20%);
+            }
+        }
+
+        @include variants('animate-bounce', $animation-variants) {
+            animation: animation-bounce $default-animation-duration infinite;
+        }
+
+
+        /** Fade in on load */
+        @keyframes animation-fade-in {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @include variants('animate-fade-in', $animation-variants) {
+            animation: animation-fade-in $default-animation-duration ease-in;
+        }
+
+
+        /** Fade out on load */
+        @include variants('animate-fade-out', $animation-variants) {
+            animation: animation-fade-in $default-animation-duration ease-in forwards reverse;
+        }
+
+
+        /** Fades in and out slightly */
+        @keyframes animation-pulse {
+            0% {
+                animation-timing-function: cubic-bezier(0.38, -0.09, 0.61, 1.09);
+                opacity: 1;
+            }
+
+            100% {
+                animation-timing-function: cubic-bezier(0.38, -0.09, 0.61, 1.09);
+                opacity: 0.5;
+            }
+        }
+
+        @include variants('animate-pulse', $animation-variants) {
+            animation: animation-pulse $default-animation-duration alternate-reverse infinite;
+        }
+
+
+        /** Expanding, fading ripples */
+        @keyframes animation-ripple {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            75%,
+            100% {
+                opacity: 0;
+                transform: scale(2);
+            }
+        }
+
+        @include variants('animate-ripple', $animation-variants) {
+            animation: animation-ripple $default-animation-duration linear infinite;
+        }
+    }
+}

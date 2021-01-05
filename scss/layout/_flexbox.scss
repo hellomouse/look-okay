@@ -1,0 +1,64 @@
+//// ----------------------------------------------------------
+/// Flexbox
+/// @group flexbox
+//// ----------------------------------------------------------
+
+@charset "utf-8";
+
+@use '../settings' as *;
+@use '../settings-post' as *;
+@use '../util/variants' as *;
+@use '../util/util';
+
+
+@if (not util.contains($blacklisted-modules, 'flexbox')) {
+
+    /** Flex direction */
+    @each $dir in (row, row-reverse, column, column-reverse) {
+        @include variants('flex-' + $dir, $flex-variants) {
+            flex-direction: $dir #{$important};
+        }
+    }
+
+
+    /** Flex wrap */
+    @each $wrap in (wrap, wrap-reverse, nowrap) {
+        @include variants('flex-' + $wrap, $flex-variants) {
+            flex-wrap: $wrap #{$important};
+        }
+    }
+   
+
+    /** Flex */
+    @include variants('flex-auto', $flex-variants) {
+        flex: auto #{$important};
+    }
+    @include variants('flex-initial', $flex-variants) {
+        flex: initial #{$important};
+    }
+    @include variants('flex-none', $flex-variants) {
+        flex: none #{$important};
+    }
+    @include variants('flex-split', $flex-variants) {
+        flex: 1 1 0 #{$important};
+    }
+
+
+    /** Flex grow / shrink */
+    @each $var in ('grow', 'shrink') {
+        @include variants('flex-' + $var + '-0', $flex-variants) {
+            flex-#{$var}: 0 #{$important};
+        }
+        @include variants('flex-' + $var + '-1', $flex-variants) {
+            flex-#{$var}: 1 #{$important};
+        }
+    }
+
+    
+    /** Flex order */
+    @each $order, $order-val in $flex-order {
+        @include variants('order-' + $order, $flex-variants) {
+            order: $order-val #{$important};
+        }
+    }
+}

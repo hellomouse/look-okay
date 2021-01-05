@@ -1,0 +1,58 @@
+//// ----------------------------------------------------------
+/// Various universal modifiers
+/// @group modifiers
+//// ----------------------------------------------------------
+
+@charset "utf-8";
+@use './util/variants' as *;
+@use './util/util';
+@use './settings' as *;
+@use './settings-post' as *;
+
+
+@if (not util.contains($blacklisted-modules, 'modifiers')) {
+        
+    /** .hidden or the hidden attribute hides the element */
+    @include variants('hidden', $modifier-variants) {
+        display: none #{$important};
+    }
+
+    [hidden] {
+        display: none #{$important};
+    }
+
+
+    @each $cursor in (auto, default, help, pointer, wait, crosshair, text, move, not-allowed, grab, grabbing, zoom-in, zoom-out) {
+        @include variants('cursor-' + $cursor, $modifier-variants) {
+            cursor: $cursor #{$important};
+        }
+    }
+
+    @each $event in (none, auto) {
+        @include variants('pointer-events-' + $event, $modifier-variants) {
+            pointer-events: $event #{$important};
+        }
+    }
+
+    /** Resize */
+    @include variants('resize-none', $modifier-variants) {
+        resize: none #{$important};
+    }
+    @include variants('resize-x', $modifier-variants) {
+        resize: horizontal #{$important};
+    }
+    @include variants('resize-y', $modifier-variants) {
+        resize: vertical #{$important};
+    }
+    @include variants('resize', $modifier-variants) {
+        resize: both #{$important};
+    }
+
+
+    @each $select in (auto, text, all, none) {
+        @include variants('select-' + $select, $modifier-variants) {
+            user-select: $select #{$important};
+        }
+    }
+}
+

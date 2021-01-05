@@ -1,0 +1,58 @@
+//// ----------------------------------------------------------
+/// Element positioning
+/// @group layout
+//// ----------------------------------------------------------
+
+@charset "utf-8";
+@use '../settings' as *;
+@use '../settings-post' as *;
+@use '../util/variants' as *;
+@use '../util/util';
+
+
+@if (not util.contains($blacklisted-modules, 'layout-sizing')) {
+
+    /**
+    * .container matches the width of the current viewpoint
+    * By exception, this class does not contain any variants
+    */
+    @each $breakpoint, $width in $breakpoints-list {
+        @media (min-width: $width) {
+            .#{$global-prefix}container {
+                width: $width;
+            }
+        }
+    }
+
+    @each $size, $size-val in $width-sizes {
+        $mw: map-get($dimension-prefixes, 'max-width');
+        $w: map-get($dimension-prefixes, 'width');
+
+        $mh: map-get($dimension-prefixes, 'max-height');
+        $h: map-get($dimension-prefixes, 'height');
+
+        /** Max-width and height */
+        @include variants($w + '-' + $size, $layout-sizing-variants) { width: $size-val #{$important}; }
+
+        @if ($size-val == auto) {
+            $size-val: none;
+            $size: 'none';
+        }
+
+        @include variants($mw + '-' + $size, $layout-sizing-variants) { max-width: $size-val #{$important}; }
+    }
+
+    @each $size, $size-val in $height-sizes {
+        $mh: map-get($dimension-prefixes, 'max-height');
+        $h: map-get($dimension-prefixes, 'height');
+
+        @include variants($h + '-' + $size, $layout-sizing-variants) { height: $size-val #{$important}; } 
+
+        @if ($size-val == auto) {
+            $size-val: none;
+            $size: 'none';
+        }
+
+        @include variants($mh + '-' + $size, $layout-sizing-variants) { max-height: $size-val #{$important}; }
+    }
+}

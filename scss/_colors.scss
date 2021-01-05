@@ -1,0 +1,107 @@
+//// ----------------------------------------------------------
+/// Color classes
+/// @group colors
+//// ----------------------------------------------------------
+
+@charset "utf-8";
+@use './util/variants' as *;
+@use './util/util';
+@use './settings' as *;
+@use './settings-post' as *;
+
+
+@if (not util.contains($blacklisted-modules, 'colors')) {
+
+    /** Dark and light theme combinations */
+    @include variants('dark',  $color-variants) {
+        background-color: $dark-background-color #{$important};
+        color: $dark-color #{$important}; 
+    }
+    @include variants('light',  $color-variants) {
+        background-color: $light-background-color #{$important};
+        color: $light-color #{$important};
+    }
+
+
+    /** Color presets for success, info, warning and error */
+    @include variants('success',  $color-variants) {
+        background-color: $background-color-success #{$important};
+        color: $color-success #{$important};
+    }
+    @include variants('info',  $color-variants) {
+        background-color: $background-color-info #{$important};
+        color: $color-info #{$important};
+    }
+    @include variants('warning',  $color-variants) {
+        background-color: $background-color-warning #{$important};
+        color: $color-warning #{$important};
+    }
+    @include variants('error',  $color-variants) {
+        background-color: $background-color-error #{$important};
+        color: $color-error #{$important};
+    }
+
+
+    /** Muted text */
+    @include variants('muted',  $color-variants) {
+        color: $muted-text-color #{$important};
+    }
+    @include variants('muted-light',  $color-variants) {
+        color: $light-muted-text-color #{$important};
+    }
+
+    
+    @for $i from 0 through 1 {
+        /** Color tint variants auto generated using prefixes from $color-modifiers */
+        @each $modifier, $tint in $color-modifiers {
+            @each $color-name, $color-var in $colors {
+                /**
+                * Generate the color variation if the tint value is 0 (base color)
+                * or the color is not in the no-variant colors list
+                *
+                * This is so colors like black and white don't get variations
+                * like darker-black
+                */
+                @if ($tint == 0% or not util.contains($no-variant-colors, $color-name)) {
+                    $color: black; /* stylelint-disable-line color-named */
+                    @if $tint >= 0 {
+                        $color: util.tint($color-var, $tint);
+                    }
+                    @else {
+                        $color: util.shade($color-var, (-1 * $tint));
+                    }
+                    
+                    /** Loop iteration 1 generates bg / fg colors and border-all color */
+                    /* stylelint-disable max-nesting-depth */
+                    @if ($i == 0) {
+                        /** Basic background and foreground colors */
+                        @include variants($modifier + $color-name, $color-variants) {
+                            color: $color #{$important};
+                        }
+                        @include variants($background-color-prefix + $modifier + $color-name, $color-variants) {
+                            background-color: $color #{$important};
+                        }
+
+                        /**
+                        * Border color variants, we generate the "all" border variant first so it has
+                        * lower specificity than single sided border variants (such as border-left-red)
+                        */
+                        @include variants(map-get($border-names, 'all') + '-' + $modifier + $color-name, $color-variants) {
+                            border-color: transparentize($color, $border-color-transparency) #{$important};
+                        }
+                    }
+
+                    /** Loop iteration 2 generates single sided border variants (higher specificity) */
+                    @else {
+                        @each $side in ('top', 'bottom', 'left', 'right') {
+                            @include variants(map-get($border-names, $side) + '-' + $modifier + $color-name, $color-variants) {
+                                border-#{$side}-color: transparentize($color, $border-color-transparency) #{$important};
+                            }
+                        }
+                    }
+                    /* stylelint-enable max-nesting-depth */
+                }
+            }
+        }
+    }
+}

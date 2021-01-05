@@ -1,0 +1,94 @@
+//// ----------------------------------------------------------
+/// Element layout and positioning
+/// @group layout
+//// ----------------------------------------------------------
+
+@charset "utf-8";
+@use '../settings' as *;
+@use '../settings-post' as *;
+@use '../util/variants' as *;
+@use '../util/util';
+
+
+@if (not util.contains($blacklisted-modules, 'layout-util')) {
+
+    /** Visibility */
+    @include variants('invisible', $layout-util-variants) {
+        visibility: hidden #{$important};
+    }
+    @include variants('visible', $layout-util-variants) {
+        visibility: visible #{$important};
+    }
+    @include variants('collapse', $layout-util-variants) {
+        visibility: collapse #{$important};
+    }
+
+
+    /** Object fit */
+    @each $fit in (fill, contain, cover, none, scale-down) {
+        @include variants('object-fit-' + $fit, $layout-util-variants) {
+            object-fit: $fit #{$important};
+        }
+    }
+
+
+    /** Object position */
+    $object-positions: (
+        'left': left, 'right': right,
+        'top': top, 'bottom': bottom,
+        'top-left': left top, 'top-right': right top,
+        'bottom-left': left bottom, 'bottom-right': right bottom,
+        'center': center
+    );
+    @each $pos-name, $pos in $object-positions {
+        @include variants('object-' + $pos-name, $layout-util-variants) {
+            object-position: $pos #{$important};
+        }
+    }
+
+
+    /** Overscroll */
+    $overscrolls: (contain, none, auto);
+    @each $scroll in $overscrolls {
+        @include variants('overscroll-' + $scroll, $layout-util-variants) {
+            overscroll-behavior: $scroll #{$important};
+        }
+    }
+
+    @each $scroll in $overscrolls {
+        @include variants('overscroll-x-' + $scroll, $layout-util-variants) {
+            overscroll-behavior-x: $scroll #{$important};
+        }
+        @include variants('overscroll-y-' + $scroll, $layout-util-variants) {
+            overscroll-behavior-y: $scroll #{$important};
+        }
+    }
+
+
+    /** Overflow types */
+    $overflows: hidden, scroll, visible, auto;
+
+    @each $overflow in $overflows {
+        @include variants('overflow-' + $overflow, $layout-util-variants) {
+            overflow: $overflow #{$important};
+        }
+        @include variants('overflow-x-' + $overflow, $layout-util-variants) {
+            overflow-x: $overflow #{$important};
+        }
+        @include variants('overflow-y-' + $overflow, $layout-util-variants) {
+            overflow-y: $overflow #{$important};
+        }
+    }
+
+    /**
+     * Auto-generated z-index utilities, in the format:
+     * z-[name]
+     *
+     * By default, name is 0, 1, 2, 3 with the corresponding z-index
+     */
+    @each $name, $value in $z-index-map {
+        @include variants($z-index-prefix + $name, $layout-util-variants) {
+            z-index: $value #{$important};
+        }
+    }
+}

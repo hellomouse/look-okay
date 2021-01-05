@@ -1,0 +1,34 @@
+{
+    "name": "look-okay",
+    "version": "0.0.1",
+    "description": "Base SCSS util lib inspired by Tailwind and others",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "node build.js"
+    },
+    "keywords": [
+        "css",
+        "look-good",
+        "hellomouse",
+        "sass"
+    ],
+    "author": "Bowserinator",
+    "license": "MIT",
+    "devDependencies": {
+        "autoprefixer": "^10.1.0",
+        "chalk": "^4.1.0",
+        "cssnano": "^4.1.10",
+        "fs-extra": "^9.0.1",
+        "html-webpack-plugin": "^4.5.0",
+        "postcss": "^8.2.2",
+        "postcss-cli": "^8.3.1",
+        "postcss-scss": "^3.0.4",
+        "postcss-short": "^5.0.0",
+        "postcss-sorting": "^6.0.0",
+        "sass": "^1.27.0",
+        "stylelint": "^13.8.0",
+        "stylelint-config-sass-guidelines": "^7.1.0",
+        "yargs": "^16.2.0"
+    }
+}

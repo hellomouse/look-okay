@@ -1,0 +1,21 @@
+//// ----------------------------------------------------------
+/// Opacity styles
+///
+/// @group opacity
+//// ----------------------------------------------------------
+
+@charset "utf-8";
+@use './util/variants' as *;
+@use './util/util';
+@use './settings' as *;
+@use './settings-post' as *;
+
+
+@if (not util.contains($blacklisted-modules, 'opacity')) {
+    /** Generate all opacity variants */
+    @each $opacity-name, $opacity in $opacity {
+        @include variants($opacity-prefix + $opacity-name, $opacity-variants) {
+            opacity: #{$opacity} #{$important};
+        }
+    }
+}

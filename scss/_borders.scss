@@ -1,0 +1,122 @@
+//// ----------------------------------------------------------
+/// Border styles.
+///
+/// Note: border-colors are in _colors.scss
+///
+/// @group borders
+//// ----------------------------------------------------------
+
+@charset "utf-8";
+@use './util/variants' as *;
+@use './util/util';
+@use './settings' as *;
+@use './settings-post' as *;
+
+
+@if (not util.contains($blacklisted-modules, 'borders')) {
+
+    /** Default border variant for quick border styling */
+    @include variants(map-get($border-names, 'all'), $border-variants) {
+        border: #{$default-border-style} #{$important};
+    }
+
+    /** Remove a border */
+    @include variants(map-get($border-names, 'all') + '-none', $border-variants) {
+        border: none #{$important};
+    }
+
+    /** Single sided classes */
+    @each $side in ('top', 'left', 'bottom', 'right') {
+        /** Default border variant for quick border styling */
+        @include variants(map-get($border-names, $side), $border-variants) {
+            border-#{$side}: #{$default-border-style} #{$important};
+        }
+
+        /** Remove a border */
+        @include variants(map-get($border-names, $side) + '-none', $border-variants) {
+            border-#{$side}: none #{$important};
+        }
+    }
+
+
+    /** Default border radius styles */
+    @include variants(map-get($border-names, 'all') + '-radius', $border-variants) {
+        border-radius: $default-border-radius #{$important}; 
+    }
+
+    @each $side in ('top-left', 'top-right', 'bottom-left', 'bottom-right') {
+        @include variants(map-get($border-names, $side) + '-radius', $border-variants) {
+            border-#{$side}-radius: $default-border-radius #{$important}; 
+        }
+    }
+
+
+    /** Border radius styles (with size) */
+    @for $i from 1 through 2 {
+        @each $size-name, $size in $border-radius-sizes {
+            /** First do non-speciic corner ones so they have lower specificity */
+            @if ($i == 1) {
+                @include variants(map-get($border-names, 'all') + '-radius-' + $size-name, $border-variants) {
+                    border-radius: $size #{$important}; 
+                }
+            }
+            
+            /** Specific corner styles */
+            @else {
+                @each $corner in 'top-left', 'top-right', 'bottom-left', 'bottom-right' {
+                    @include variants(map-get($border-names, $corner) + '-radius-' + $size-name, $border-variants) {
+                        border-#{$corner}-radius: $size #{$important};
+                    }
+                }
+
+                @include variants(map-get($border-names, 'top') + '-radius-' + $size-name, $border-variants) {
+                    border-top-left-radius: $size #{$important};
+                    border-top-right-radius: $size #{$important};
+                }
+                @include variants(map-get($border-names, 'bottom') + '-radius-' + $size-name, $border-variants) {
+                    border-bottom-left-radius: $size #{$important};
+                    border-bottom-right-radius: $size #{$important};
+                }
+                @include variants(map-get($border-names, 'left') + '-radius-' + $size-name, $border-variants) {
+                    border-bottom-left-radius: $size #{$important};
+                    border-top-left-radius: $size #{$important};
+                }
+                @include variants(map-get($border-names, 'right') + '-radius-' + $size-name, $border-variants) {
+                    border-bottom-right-radius: $size #{$important};
+                    border-top-right-radius: $size #{$important};
+                }
+            }
+        }
+    }
+
+    /** Other border radius styles */
+    @include variants('rounded', $border-variants) {
+        border-radius: 9999px #{$important}; 
+    }
+
+
+    /** Border variations */
+    $border-styles: ('dotted', 'dashed', 'solid', 'double', 'groove', 'ridge', 'inset', 'outset', 'hidden');
+    @each $style in $border-styles {
+        @include variants(map-get($border-names, 'all') + '-' + $style, $border-variants) {
+            border-style: #{$style} #{$important};
+        }
+    }
+
+
+    /** Border widths */
+    @each $size-name, $size in $border-sizes {
+        @include variants(map-get($border-names, 'all') + '-' + $size-name, $border-variants) {
+            border-width: $size #{$important}; 
+        }
+    }
+
+    /** Per-side border widths, put after to ensure higher specificity */
+    @each $size-name, $size in $border-sizes {
+        @each $side in ('top', 'left', 'bottom', 'right') {
+            @include variants(map-get($border-names, $side) + '-' + $size-name, $border-variants) {
+                border-#{$side}-width: $size #{$important}; 
+            }
+        }
+    }
+}

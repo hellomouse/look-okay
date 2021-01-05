@@ -1,0 +1,142 @@
+//// ----------------------------------------------------------
+/// Text classes
+/// @group text
+//// ----------------------------------------------------------
+
+@charset "utf-8";
+@use '../util/variants' as *;
+@use '../util/util';
+@use '../settings' as *;
+@use '../settings-post' as *;
+
+
+@if (not util.contains($blacklisted-modules, 'text')) {
+
+    /** Text transform */
+    @include variants($text-prefix + 'uppercase', $text-variants) {
+        text-transform: uppercase #{$important};
+    }
+    @include variants($text-prefix + 'lowercase', $text-variants) {
+        text-transform: lowercase #{$important};
+    }
+    @include variants($text-prefix + 'capitalize', $text-variants) {
+        text-transform: capitalize #{$important};
+    }
+    @include variants($text-prefix + 'no-transform', $text-variants) {
+        text-transform: none #{$important};
+    }
+
+
+    /** Text alignment */
+    @include variants($text-prefix + 'center', $text-variants) {
+        text-align: center #{$important};
+    }
+    @include variants($text-prefix + 'left', $text-variants) {
+        text-align: left #{$important};
+    }
+    @include variants($text-prefix + 'right', $text-variants) {
+        text-align: right #{$important};
+    }
+    @include variants($text-prefix + 'justify', $text-variants) {
+        text-align: justify #{$important};
+        text-justify: inter-word #{$important};
+    }
+
+
+    /** Vertical alignment */
+    @each $align in (baseline, top, middle, bottom, text-top, text-bottom, sub, super) {
+        @include variants('align-' + $align, $text-variants) {
+            vertical-align: $align #{$important};
+        }
+    }
+
+
+    /** Text decoration */
+    @include variants($text-prefix + 'no-decoration', $text-variants) {
+        text-decoration: none #{$important};
+    }
+    @include variants($text-prefix + 'underline', $text-variants) {
+        text-decoration: underline #{$important};
+    }
+    @include variants($text-prefix + 'overline', $text-variants) {
+        text-decoration: overline #{$important};
+    }
+    @include variants($text-prefix + 'underoverline', $text-variants) {
+        text-decoration: underline overline #{$important};
+    }
+    @include variants($text-prefix + 'strike', $text-variants) {
+        text-decoration: line-through #{$important};
+    }
+
+
+    /** Text decoration styles */
+    @each $deco-style in (solid, double, dotted, dashed, wavy) {
+        @include variants($text-prefix + 'decoration-' + $deco-style, $text-variants) {
+            text-decoration-style: #{$deco-style} #{$important};
+        }
+    }
+
+
+    /** Whitespace styles */
+    @each $prop in ('normal', 'nowrap', 'pre', 'pre-line', 'pre-wrap') {
+        @include variants('whitespace-' + $prop, $text-variants) {
+            white-space: #{$prop} #{$important};
+        }
+    }
+
+
+    /** Word break */
+    @include variants('break-normal', $text-variants) {
+        overflow-wrap: normal #{$important};
+        word-break: normal #{$important};
+    }
+    @include variants('break-word', $text-variants) {
+        word-break: break-word #{$important};
+    }
+    @include variants('break-all', $text-variants) {
+        word-break: break-all #{$important};
+    }
+
+
+    /** Text overflow */
+    @include variants($text-prefix + 'truncate', $text-variants) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    @include variants($text-prefix + 'overflow-ellipsis', $text-variants) {
+        text-overflow: ellipsis;
+    }
+    @include variants($text-prefix + 'overflow-clip', $text-variants) {
+        text-overflow: clip;
+    }
+
+
+    /** Misc text styles */
+    @include variants($text-prefix + 'indent', $text-variants) {
+        text-indent: $default-text-indent #{$important};
+    }
+
+
+    /** List styles */
+    @include variants('list-reset', $text-variants) {
+        list-style: none #{$important};
+        padding: 0 #{$important};
+    }
+
+    @each $style in (none, disc, circle, square, decimal, decimal-leading-zero,
+    lower-roman, upper-roman, lower-alpha, upper-alpha) {
+        @include variants('list-style-' + $style, $text-variants) {
+            list-style: $style #{$important};
+        }
+    }
+
+    
+    /** List style position */
+    @each $pos in (inside, outside) {
+        @include variants('list-' + $pos, $text-variants) {
+            list-style-position: $pos #{$important};
+        }
+    }
+}

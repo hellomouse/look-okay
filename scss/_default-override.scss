@@ -1,0 +1,96 @@
+//// ----------------------------------------------------------
+/// Default global overrides for certain elements
+/// @group default-override
+//// ----------------------------------------------------------
+
+@charset "utf-8";
+@use './util/util' as *;
+@use './settings' as *;
+@use './settings-post' as *;
+
+
+/** Unstyled headings by default */
+@if (map-get($override-default, 'headers')) {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-size: inherit;
+        font-weight: inherit;
+    }
+}
+
+
+/**
+ * Use the configured font(s) in settings by default
+ * Does not import the fonts - do it yourself!
+ */
+@if (map-get($override-default, 'font')) {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: $default-header-font;
+    }
+
+    body,
+    input,
+    textarea,
+    button {
+        font-family: $default-body-font;
+    }
+}
+
+
+/** Forces default margins to 0 */
+@if (map-get($override-default, 'margins')) {
+    body,
+    blockquote,
+    dl,
+    dd,
+    p,
+    figure,
+    pre,
+    fieldset,
+    menu,
+    ol,
+    ul,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    hr {
+        margin: 0;
+    }
+}
+
+
+/** List reset is applied by default */
+@if (map-get($override-default, 'list-style')) {
+    ol,
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+}
+
+
+/** Image like elements are display:block by default */
+@if (map-get($override-default, 'image-block')) {
+    img,
+    svg,
+    video,
+    canvas,
+    audio,
+    iframe,
+    embed,
+    object {
+        display: block;
+    }
+}

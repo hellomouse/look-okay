@@ -1,0 +1,83 @@
+/// ----------------------------------------------------------
+/// Element layout and positioning
+/// @group layout
+//// ----------------------------------------------------------
+
+@charset "utf-8";
+
+@use '../settings' as *;
+@use '../settings-post' as *;
+@use '../util/variants' as *;
+@use '../util/util';
+
+
+@if (not util.contains($blacklisted-modules, 'box-alignment')) {
+    
+    /** item justification */
+
+    /** Content alignment */
+    @each $prop, $prop-val in (
+        'start': flex-start,
+        'end': flex-end,
+        'center': center,
+        'space-around': space-around,
+        'space-between': space-between,
+        'space-evenly': space-evenly
+    ) {
+        @include variants('justify-' + $prop, $box-alignment-variants) {
+            justify-content: $prop-val #{$important};
+        }
+        @include variants('align-content-' + $prop, $box-alignment-variants) {
+            align-content: $prop-val #{$important};
+        }
+        //@include variants("place-content-" + $prop, $box-alignment-variants) {
+        //    place-content: $prop-val #{$important};
+        //}
+    }
+
+    @each $prop in (auto, start, end, center, stretch) {
+        @include variants('justify-items-' + $prop, $box-alignment-variants) {
+            justify-items: $prop #{$important};
+        }
+        //@include variants("place-items-" + $prop, $box-alignment-variants) {
+        //    place-items: $prop #{$important};
+        //}
+    }
+
+    // Higher specificity
+    @each $prop in (auto, start, end, center, stretch) {
+        @include variants('justify-self-' + $prop, $box-alignment-variants) {
+            justify-self: $prop #{$important};
+        }
+        //@include variants("place-self-" + $prop, $box-alignment-variants) {
+        //    place-self: $prop #{$important};
+        //}
+    }
+
+
+    /** item alignment */
+    @each $prop, $prop-val in (
+        'start': flex-start,
+        'end': flex-end,
+        'center': center,
+        'baseline': baseline,
+        'stretch': stretch
+    ) {
+        @include variants('align-items-' + $prop, $box-alignment-variants) {
+            align-items: $prop-val #{$important};
+        }
+        
+    }
+
+    @each $prop, $prop-val in (
+        'auto': auto,
+        'start': flex-start,
+        'end': flex-end,
+        'center': center,
+        'stretch': stretch
+    ) {
+        @include variants('align-self-' + $prop, $box-alignment-variants) {
+            align-self: $prop-val #{$important};
+        }
+    }
+}

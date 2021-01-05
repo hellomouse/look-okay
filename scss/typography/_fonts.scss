@@ -1,0 +1,84 @@
+//// ----------------------------------------------------------
+/// Font classes
+/// @group font
+//// ----------------------------------------------------------
+
+@charset "utf-8";
+@use '../util/variants' as *;
+@use '../util/util';
+@use '../settings' as *;
+@use '../settings-post' as *;
+
+
+@if (not util.contains($blacklisted-modules, 'fonts')) {
+
+    /** Font styles */
+    @include variants($font-prefix + 'italic', $font-variants) {
+        font-style: italic #{$important};
+    }
+    @include variants($font-prefix + 'not-italic', $font-variants) {
+        font-style: none #{$important};
+    }
+
+
+    /* Font weight variants */
+    @each $weight, $weight-val in $font-weights {
+        @include variants($font-prefix + $weight, $font-variants) {
+            font-weight: $weight-val #{$important};
+        }
+    }
+
+    /** Line height */
+    @each $size, $size-val in $line-heights {
+        @include variants('line-' + $size, $font-variants) {
+            line-height: $size-val #{$important};
+        }
+    }
+
+    /** Letter spacing */
+    @each $size, $size-val in $letter-spacing {
+        @include variants('letter-spacing-' + $size, $font-variants) {
+            letter-spacing: $size-val #{$important};
+        }
+    }
+
+
+    /** Inherit stuff */
+    @include variants($font-prefix + 'family-inherit', $font-variants) {
+        font-family: inherit #{$important};
+    }
+    @include variants($font-prefix + 'size-inherit', $font-variants) {
+        font-size: inherit #{$important};
+    }
+
+
+    /** Font sizes */
+    @each $size, $size-val in $font-sizes {
+        @include variants($font-prefix + $size, $font-variants) {
+            font-size: $size-val #{$important};
+        }
+    }
+    
+
+    /** Font variants */
+    @include variants($font-prefix + 'variant-normal', $font-variants) {
+        font-variant: normal #{$important};
+    }
+    @include variants($font-prefix + 'small-caps', $font-variants) {
+        font-variant: small-caps #{$important};
+    }
+
+
+    /** Numeric variants */
+    @each $var in (normal, ordinal, slashed-zero, lining-nums, oldstyle-nums,
+    proportional-nums, tabular-nums, diagonal-fractions, stacked-fractions) {
+        $suffix: '';
+        @if ($var == normal) {
+            $suffix: '-nums';
+        }
+
+        @include variants($font-prefix + $var + $suffix, $font-variants) {
+            font-variant-numeric: $var #{$important};
+        }
+    }
+}

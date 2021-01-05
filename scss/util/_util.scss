@@ -1,0 +1,40 @@
+
+@function contains($list, $item) {
+    @return index($list, $item) != null;
+}
+
+
+/// Darken a color by a percentage
+/// Unlike the builtin darken() function this fades
+/// to black better by using mix()
+/// @param {Color} $color - Color to alter
+/// @param {Number} $percent - Percent to fade to black, 0 = no change, 100% = black
+@function shade($color, $percent) {
+    @return mix(black, $color, $percent);
+}
+
+/// Lighten a color by a percentage
+/// Unlike the builtin lighten() function this fades
+/// to white better by using mix()
+/// @param {Color} $color - Color to alter
+/// @param {Number} $percent - Percent to fade to black, 0 = no change, 100% = white
+@function tint($color, $percent) {
+    @return mix(white, $color, $percent);
+}
+
+/// Returns black if the lightness of the color is less than 50%,
+/// otherwise returns white. $mix can be used to fade the color,
+/// black is tinted (lightened) by this amount, and white is
+/// shaded (darkened) by this amount using the shade() and tint()
+/// mixins. This can be used to create softer grays and create
+/// text that will better contrast with a given background
+/// @param {Color} $color - Color of background (to analyze)
+/// @param {Number} $mix [0%] - How much to gray the color 
+@function black-or-white-contrast($color, $mix: 0%) {
+    @if lightness($color) < 50% {
+        @return shade(white, $mix);
+    }
+    @else {
+        @return tint(black, $mix);
+    }
+}

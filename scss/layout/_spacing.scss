@@ -1,0 +1,114 @@
+//// ----------------------------------------------------------
+/// Element layout and positioning
+/// @group layout
+//// ----------------------------------------------------------
+
+@charset "utf-8";
+@use '../settings' as *;
+@use '../settings-post' as *;
+@use '../util/variants' as *;
+@use '../util/util';
+
+
+@if (not util.contains($blacklisted-modules, 'layout-spacing')) {
+
+    /** Box-sizing classes */
+    @include variants('content-box', $layout-spacing-variants) { box-sizing: content-box #{$important}; }
+    @include variants('border-box',  $layout-spacing-variants) { box-sizing: border-box #{$important}; }
+
+
+    /**
+    * Auto-generated padding utilities, in the format:
+    * p[optional: (t|b|l|r|x|y)]-[name]
+    *
+    * By default, name can be:
+    *    sm, md, lg, xl, 0
+    *
+    * Names can be customized in settings by changing the 
+    * name of the keys in $padding-map
+    */
+
+    $t: map-get($margin-padding-abbrev, 'top');
+    $b: map-get($margin-padding-abbrev, 'bottom');
+    $l: map-get($margin-padding-abbrev, 'left');
+    $r: map-get($margin-padding-abbrev, 'right');
+    $x: map-get($margin-padding-abbrev, 'x-axis');
+    $y: map-get($margin-padding-abbrev, 'y-axis');
+
+    @each $name, $value in $padding-map {
+        $p: map-get($margin-padding-abbrev, 'padding');
+
+        @include variants($p + '-' + $name, $layout-spacing-variants) {
+            padding: $value #{$important};
+        }
+    }
+
+    @each $name, $value in $padding-map {
+        $p: map-get($margin-padding-abbrev, 'padding');
+
+        @include variants($p + $t + '-' + $name, $layout-spacing-variants) {
+            padding-top: $value #{$important};
+        }
+        @include variants($p + $b + '-' + $name, $layout-spacing-variants) {
+            padding-bottom: $value #{$important};
+        }
+        @include variants($p + $l + '-' + $name, $layout-spacing-variants) {
+            padding-left: $value #{$important};
+        }
+        @include variants($p + $r + '-' + $name, $layout-spacing-variants) {
+            padding-right: $value #{$important};
+        }
+        @include variants($p + $x + '-' + $name, $layout-spacing-variants) {
+            padding-left: $value #{$important};
+            padding-right: $value #{$important};
+        }
+        @include variants($p + $y + '-' + $name, $layout-spacing-variants) {
+            padding-bottom: $value #{$important};
+            padding-top: $value #{$important};
+        }
+    }
+
+
+    /**
+    * Auto-generated margin utilities, in the format:
+    * m[optional: (t|b|l|r|x|y)]-[name]
+    *
+    * By default, name can be:
+    *    sm, md, lg, xl, n-sm, n-md, n-lg, n-xl, 0, auto
+    *
+    * Names can be customized in settings by changing the 
+    * name of the keys in $margin-map
+    */
+    @each $name, $value in $margin-map {
+        $m: map-get($margin-padding-abbrev, 'margin');
+
+        @include variants($m + '-' + $name, $layout-spacing-variants) {
+            margin: $value #{$important};
+        }
+    }
+
+    @each $name, $value in $margin-map {
+        $m: map-get($margin-padding-abbrev, 'margin');
+
+        @include variants($m + $t + '-' + $name, $layout-spacing-variants) {
+            margin-top: $value #{$important};
+        }
+        @include variants($m + $b + '-' + $name, $layout-spacing-variants) {
+            margin-bottom: $value #{$important};
+        }
+        @include variants($m + $l + '-' + $name, $layout-spacing-variants) {
+            margin-left: $value #{$important};
+        }
+        @include variants($m + $r + '-' + $name, $layout-spacing-variants) {
+            margin-right: $value #{$important};
+        }
+        @include variants($m + $x + '-' + $name, $layout-spacing-variants) {
+            margin-left: $value #{$important};
+            margin-right: $value #{$important};
+        }
+        @include variants($m + $y + '-' + $name, $layout-spacing-variants) {
+            margin-bottom: $value #{$important};
+            margin-top: $value #{$important};
+        }
+    }
+}

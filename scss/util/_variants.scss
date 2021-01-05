@@ -1,0 +1,125 @@
+//// ----------------------------------------------------------
+/// Make a class function only at specified breakpoints
+/// @group responsive
+//// ----------------------------------------------------------
+
+@charset "utf-8";
+@use '../settings' as *;
+@use 'util' as *;
+
+
+$element-states: ('hover', 'focus', 'active', 'visited', 'checked', 'disabled');
+$special-element-states: (
+    'first': 'first-child',
+    'last' : 'last-child',
+    'even' : 'nth-child(even)',
+    'odd'  : 'nth-child(odd)'
+);
+
+
+/**
+ * Temporary mixin to generate all variants except responsive. Accepts a
+ * prefix to prepend to all class names, this should not be used
+ * (Only used as a helper in variants)
+ */
+@mixin _variant-generator($classname, $prefix, $variants: ('responsive'), $body: false) {
+    $classname: $global-prefix + $classname; // Prepend global prefix
+
+    @if not $body {
+        .#{$prefix}#{$classname} {
+            @content;
+        }
+    } @else {
+        body .#{$prefix}#{$classname} {
+            @content;
+        }
+    }
+
+    $_all: contains($variants, 'all');
+
+
+    /**
+     * Check and create variant for each state, ie :hover,
+     * :active, :focus, etc... when the state is active
+     */
+    @each $state in $element-states {
+        @if ($_all or contains($variants, $state)) {
+            body .#{$prefix}#{$state}#{$variant-separator}#{$classname}:#{$state} {
+                @content;
+            }
+        }
+    }
+
+    /** 
+     * Same as above, but prefix may not match pseudo-class
+     * For example, even:myclass is .even\:myclass:nth-child(even)
+     */
+    @each $state, $suffix in $special-element-states {
+        @if ($_all or contains($variants, $state)) {
+            body .#{$prefix}#{$state}#{$variant-separator}#{$classname}:#{$suffix} {
+                @content;
+            }
+        }
+    }
+
+
+    /**
+     * Variants for only running when:
+     * - prefers-reduced-motion (.reduce-motion:)
+     * - no-preference (.default-motion:)
+     */
+    @if ($_all or contains($variants, 'reduce-motion')) {
+        @media (prefers-reduced-motion) {
+            body .#{$prefix}reduce-motion#{$variant-separator}#{$classname} {
+                @content;
+            }
+        }
+    }
+
+    @if ($_all or contains($variants, 'default-motion')) {
+        @media (no-preference) {
+            body .#{$prefix}default-motion#{$variant-separator}#{$classname} {
+                @content;
+            }
+        }
+    }
+}
+
+
+/**
+ * Make pseudo-class variants of any class (recommended: only 
+ * use for modifier classes).
+ *
+ * Example usage:
+ * @include variants("hidden", ("responsive")) {
+ *     display: none;
+ * }
+ * creates the following classes that trigger on:
+ * .hidden    - Always active
+ * .sm:hidden - Active when sm breakpoint is hit
+ * .md:hidden - Active when md breakpoint is hit, overrides sm
+ * etc...
+ *
+ * Note that responsive variant can be combined with other variants,
+ * for instance: md:hover:classname
+ */
+@mixin variants($classname, $variants: ('responsive')) {
+    @include _variant-generator($classname, '', $variants) {
+        @content;
+    };
+
+    /** 
+     * Responsive variants (sm:classname, md:classname, etc...)
+     * Only trigger on min-width, so you should design mobile-first
+     * and add additional responsive classes on top 
+     */
+    @if (contains($variants, 'all') or contains($variants, 'responsive')) {
+        @each $breakpoint, $width in $breakpoints-list {
+            @media (min-width: $width) {
+                @include _variant-generator($classname, $breakpoint + $variant-separator, $variants, true) {
+                    @content;
+                };
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "extends": "stylelint-config-sass-guidelines",
+    "plugins": [
+        "stylelint-scss",
+        "stylelint-order"
+    ],
+
+    "rules": {
+        "indentation": 4,
+        "order/order": [],
+        "scss/at-mixin-pattern": [
+            "^\\_*[a-z]+([a-z0-9-]+[a-z0-9]+)?$",
+            {
+                "message": "Mixins should be written in lowercase with hyphens and optional _ prefix (selector-class-pattern)"
+            }
+        ],
+        "max-nesting-depth": 4
+    }
+}

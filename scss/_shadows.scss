@@ -1,0 +1,26 @@
+//// ----------------------------------------------------------
+/// Shadow styles
+///
+/// @group shadows
+//// ----------------------------------------------------------
+
+@charset "utf-8";
+@use './util/variants' as *;
+@use './util/util';
+@use './settings' as *;
+@use './settings-post' as *;
+
+
+@if (not util.contains($blacklisted-modules, 'shadows')) {
+    /** Generate all shadow variants */
+    @each $size-name, $shadow in $shadows {
+        @include variants($shadow-prefix + $size-name, $shadow-variants) {
+            box-shadow: #{$shadow} #{$important};
+        }
+    }
+
+    /** Text shadows */
+    @include variants($shadow-prefix + 'text', $shadow-variants) {
+        text-shadow: $text-shadow-default #{$important};
+    }
+}

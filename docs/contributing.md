@@ -304,6 +304,7 @@ The file structure for docs is as follows:
 +-- index.html
 +-- README.md
 +-- report-a-bug.md
++-- ...
 ```
 
 See writing docs above for docs template and structure.

@@ -10,6 +10,8 @@ window.$docsify = {
 
     coverpage: '_cover.md',
 
+    notFoundPage: true,
+
     // docsify-tabs
     tabs: {
         persist: true,
@@ -45,4 +47,10 @@ Licensed under the <a href="https://github.com/hellomouse/look-okay/blob/master/
             hook.beforeEach(html => '\n\n' + html)
         }
     ],
+}
+
+
+// PWA
+if (typeof navigator.serviceWorker !== 'undefined') {
+    navigator.serviceWorker.register('sw.js');
 }

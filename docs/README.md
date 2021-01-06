@@ -1,5 +1,7 @@
 # look-okay
 
+🚧 Under development, don't use yet
+
 Base SCSS util lib inspired by Tailwind and others. Made for hellomouse, but you're welcome to use in your own projects.
 This is meant to be the base library for a possible hellomouse SCSS / React framework, so it contains mostly atomics for styling UI and layout.
 

@@ -20,7 +20,18 @@
     <link rel="stylesheet" href="dist/index.css">
 </head>
 <body>
-    <div id="app"></div>
+    <div id="app">
+        <!-- Loading spinner -->
+        <div class="flex align-items-center justify-center text-center h-viewport">
+            <div class="w-viewport">
+                <div style="border: 0.15rem solid gray;
+                            border-radius: 50%; height: 6rem; width: 6rem"
+                    class="[ animate-spin ] [ mx-auto ] [ border-lighter-gray border-t-secondary border-2 ]">
+                </div>
+                <p class="mb-0 mt-xl font-h4 text-uppercase">Loading docs...</p>
+            </div>
+        </div>
+    </div>
 
     <script src="dist/index.js"></script>
     <script src="dist/cssprops.js"></script>

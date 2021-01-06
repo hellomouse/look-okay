@@ -25,9 +25,6 @@ Using <code>@use</code> will put all variables under its own namespace, whereas 
 </div>
 
 
-## Folder Structure
-
-
 ## Global Settings
 
 All settings can be found under `_settings.scss`. The settings for each individual module can be searched and detailed information 

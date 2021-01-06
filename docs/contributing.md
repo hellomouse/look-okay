@@ -264,7 +264,7 @@ Of course, no code is complete without documentation. Here are the steps you sho
 
 ### First steps
 
-Replace `docs/index.css` with the compiled `index.min.css` file from `build`. 
+Replace `docs/look-good.css` with the compiled `index.min.css` file from `build`. 
 
 
 ### Adding docs page

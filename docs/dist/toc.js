@@ -1,69 +1,147 @@
-/*
-  Docsify plugin for adding toc of each page.
-  author: Ragina Jeon
+/**
+ * Docsify plugin for adding toc of each page.
+ * author: Ragina Jeon
+ *
+ * Modified by Bowserinator
  */
 
-var defaultOptions = {
-  tocMaxLevel: 3,
-  target: 'h2, h3',
+let defaultOptions = {
+    tocMaxLevel: 3,
+    target: 'h2, h3',
+    sideScrollUpdateInterval: 70
+};
+
+
+/**
+ * Collects headings and compiles into HTML
+ * @return {string} Compiled html
+ */
+function pageToC() {
+    let headings = document.querySelectorAll(`.markdown-section ${window.$docsify['page-toc'].target}`);
+    let toc_top = 
+`<div class="page-toc">
+ <p class="_title">Contents</p>`;
+
+    let list = [];
+    if (headings) {
+        headings.forEach(heading => {
+            let item = generateToC(heading.tagName.replace(/h/gi, ''), heading.innerHTML);
+            if (item)
+                list.push(item);
+        });
+    }
+
+    if (list.length) {
+        return `${toc_top}
+            ${list.join('\n')}
+            </div>`;
+    }
+    return '';
 }
 
-// To collect headings and then add to the page ToC
-function pageToC(headings, path) {
-  var list = [];
-  var toc = ['<div class="page_toc">', '<p class="title">Contents</p>'];
-  var headingSelector =  '.markdown-section ' + window.$docsify["page-toc"].target
-  headings = document.querySelectorAll(headingSelector);
 
-  if (headings) {
-    headings.forEach(function (heading) {
-      var item = generateToC(heading.tagName.replace(/h/gi, ""), heading.innerHTML)
-      if (item) {
-        list.push(item)
-      }
-    });
-  }
-
-  if (list.length > 0) {
-    toc = toc.concat(list);
-    toc.push("</div>");
-    return toc.join("");
-  } else {
-    return "";
-  }
-}
-
-// To generate each ToC item
+/**
+ * Generates an individual ToC item from heading data
+ *
+ * @param level {number} Heading level, ie h1 => 1
+ * @param html {string} innerHTML of the heading
+ */
 function generateToC(level, html) {
-  if (level > 0 && level <= window.$docsify["page-toc"].tocMaxLevel) {
-    return ['<div class="lv' + level + '">', html, "</div>"].join("");
-  }
-  return "";
+    const settings = window.$docsify['page-toc'];
+
+    if (level > 0 && level <= settings.tocMaxLevel) {
+        // Extra hack for hellomouse docs
+        html = html.replace(/<span [A-Za-z""=0-9-]+>(.*?)<\/span>/g, '');
+        // End hack
+
+        return `<div class="lv${level} toc-link">${html}</div>`;
+    }
+    return "";
 }
 
-// Docsify plugin functions
+
+/**
+ * Main docsify plugin function
+ * @param hook
+ * @param vm
+ */
 function plugin(hook, vm) {
-  hook.mounted(function () {
-    var content = window.Docsify.dom.find(".content");
-    if (content) {
-      var nav = window.Docsify.dom.create("aside", "");
-      window.Docsify.dom.toggleClass(nav, "add", "nav");
-      window.Docsify.dom.before(content, nav);
-    }
-  });
-  hook.doneEach(function () {
-    var nav = window.Docsify.dom.find(".nav");
-    if (nav) {
-      nav.innerHTML = pageToC().trim();
-      if (nav.innerHTML == "") {
-        window.Docsify.dom.toggleClass(nav, "add", "nothing");
-      } else {
-        window.Docsify.dom.toggleClass(nav, "remove", "nothing");
-      }
-    }
-  });
+    hook.mounted(function () {
+        let content = window.Docsify.dom.find('.content');
+        if (content) {
+            let nav = window.Docsify.dom.create('aside', '');
+            window.Docsify.dom.toggleClass(nav, 'add', 'nav');
+            window.Docsify.dom.before(content, nav);
+        }
+    });
+    hook.doneEach(function () {
+        let nav = window.Docsify.dom.find('.nav');
+        if (nav) {
+            nav.innerHTML = pageToC().trim();
+            if (nav.innerHTML === '') {
+                window.Docsify.dom.toggleClass(nav, 'add', 'nothing');
+            } else {
+                window.Docsify.dom.toggleClass(nav, 'remove', 'nothing');
+            }
+        }
+    });
 }
 
-// Docsify plugin options
-window.$docsify["page-toc"] = Object.assign(defaultOptions, window.$docsify["page-toc"]);
-window.$docsify.plugins = [].concat(plugin, window.$docsify.plugins);
+
+// Add plugin to docsify plugin array
+window.$docsify['page-toc'] = Object.assign(defaultOptions, window.$docsify['page-toc']);
+window.$docsify.plugins = window.$docsify.plugins.concat(plugin);
+
+
+// Dynamic scroll indicator
+let headings = [];
+let toc_links = [];
+let toc_link_urls = [];
+
+let headers_to_search = window.$docsify['page-toc'].target.split(', ');
+let current_location = null;
+
+
+setInterval(() => {
+    if (window.location.href !== current_location) {
+        // Update headings and toc_links, window location changed
+
+        // Get markdown section where all headers are stored
+        let markdown_section = document.getElementsByClassName('markdown-section');
+        if (!markdown_section.length)
+            return;
+        markdown_section = markdown_section[0];
+
+
+        // Get all headers under markdown section
+        headings = [];
+        for (let header of headers_to_search)
+            headings = headings.concat([...markdown_section.getElementsByTagName(header)]);
+    
+
+        // Get all TOC links
+        toc_links = [...document.getElementsByClassName('toc-link')];
+        toc_link_urls = toc_links.map(x => x.innerHTML.match(/href="(.*?)"/g)[0]);
+
+        if (headings.length && toc_links.length)
+            current_location = window.location.href;
+    }
+
+
+    // Reset all toc link styles
+    for (let link of toc_links)
+        link.classList.remove('toc-active');
+
+    // Highlight all toc links that have been scrolled past
+    for (let heading of headings) {
+        if (heading.offsetTop < document.documentElement.scrollTop + window.innerHeight) {
+            let url = heading.innerHTML.match(/href="(.*?)"/g)[0];
+
+            for (let i = 0; i < toc_link_urls.length; i++) {
+                if (toc_link_urls[i] === url)
+                    toc_links[i].classList.add('toc-active');
+            }
+        }
+    }
+
+}, window.$docsify['page-toc'].sideScrollUpdateInterval)

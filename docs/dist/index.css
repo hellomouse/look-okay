@@ -14,6 +14,10 @@ html {
     --code-inline-background: #ebf5f1;
     --code-inline-color: #33755e;
 
+    --cover-background-color: #cbe4db;
+    --cover-background-image: none;
+    --cover-heading-color: black;
+
 
     /* Slightly larger than default to fit borders */
     --toc-width: 250px;

@@ -106,7 +106,7 @@ $special-element-states: (
 @mixin variants($classname, $variants: ('responsive')) {
     @include _variant-generator($classname, '', $variants) {
         @content;
-    };
+    }
 
     /** 
      * Responsive variants (sm:classname, md:classname, etc...)
@@ -118,7 +118,7 @@ $special-element-states: (
             @media (min-width: $width) {
                 @include _variant-generator($classname, $breakpoint + $variant-separator, $variants, true) {
                     @content;
-                };
+                }
             }
         }
     }

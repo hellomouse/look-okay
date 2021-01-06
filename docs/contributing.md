@@ -315,6 +315,7 @@ In addition to adding your page, you need to update the following:
 
 - `_sidebar.md` - Add your page link there where approporiate
 - `getting-started/customization.md` - Update folder structure (if applicable)
+- `optimizing.md` - Update file sizes for new build
 
 
 ### Updating `_settings.scss`

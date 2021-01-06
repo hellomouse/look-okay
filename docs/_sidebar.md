@@ -15,7 +15,7 @@
 
 <h2 class="sidebar-h2">Concepts</h2>
 
-[Utilities](/concepts/utilities)
+[Utilty Based Design](/concepts/utilities)
 
 [Responsive design](/concepts/responsive)
 

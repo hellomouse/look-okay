@@ -2,11 +2,11 @@
 
 ---
 
-[TODO ACTUALLY TEST]
+## What Browsers Does it Support?
 
-Should work in all modern browsers. **Look-okay does not support any version of IE.**
+Look-okay works in all modern browsers. We use normalize.css for CSS resets and autoprefixer for vendor-specific prefixes to maintain compatability. Some of the newer features such as grid and flexbox may not behave well in much older browser versions.
 
-Look-okay uses normalize.css for CSS resets and [todo: prefix vendor stuff]
 
+**We do not support any version of IE.**
 
 

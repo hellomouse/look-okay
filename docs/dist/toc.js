@@ -99,11 +99,21 @@ let toc_links = [];
 let toc_link_urls = [];
 
 let headers_to_search = window.$docsify['page-toc'].target.split(', ');
-let current_location = null;
+let re_compute = true;
+let count = 0;
 
 
 setInterval(() => {
-    if (window.location.href !== current_location) {
+    // For some reason polling for window location changes isn't reliable in doscify
+    // So we just re-compute the toc every so often
+    if (count % 5 == 0) {
+        re_compute = true;
+        count = 0;
+    }
+
+    count++;
+
+    if (re_compute) {
         // Update headings and toc_links, window location changed
 
         // Get markdown section where all headers are stored
@@ -124,7 +134,7 @@ setInterval(() => {
         toc_link_urls = toc_links.map(x => x.innerHTML.match(/href="(.*?)"/g)[0]);
 
         if (headings.length && toc_links.length)
-            current_location = window.location.href;
+            re_compute = false;
     }
 
 

@@ -34,8 +34,8 @@ window.$docsify = {
 <br><hr><br>
 <footer class="dark-gray text-right">
 <span>hellomouse.look-okay ${VERSION} &nbsp;|&nbsp; 
-<span><a href="https://github.com/hellomouse">Hellomouse</a> &copy;2020 - Present.</span><br>
-Licensed under the <a href="https://github.com/hellomouse/look-okay/LICENSE.md">MIT license</a>
+<span><a href="https://github.com/hellomouse">Hellomouse</a> &copy;2021 - Present.</span><br>
+Licensed under the <a href="https://github.com/hellomouse/look-okay/blob/master/LICENSE.md">MIT license</a>
 </footer>`;
             hook.afterEach(html => html + footer);
         },

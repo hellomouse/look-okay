@@ -71,13 +71,13 @@ When using `.object-fit-fill`, content will be streched to fill the content box.
 
 <div class="demo">
     <div class="bg-lighter-blue-gray striped-bg inline-block m-sm border" style="width: 150px; height: 150px">
-        <img class="object-fit-fill w-100 h-100" src="/img/mountain.jpeg">
+        <img class="object-fit-fill w-100 h-100" src="img/mountain.jpeg">
     </div>
 </div>
 
 ```html
 <div class="..." style="width: 150px; height: 150px">
-    <img class="object-fit-fill w-100 h-100" src="/img/mountain.jpeg">
+    <img class="object-fit-fill w-100 h-100" src="img/mountain.jpeg">
 </div>
 ```
 
@@ -87,13 +87,13 @@ When using `.object-fit-contain`, content will fill the content box as much as i
 
 <div class="demo">
     <div class="bg-lighter-blue-gray striped-bg inline-block m-sm border" style="width: 150px; height: 150px">
-        <img class="object-fit-contain w-100 h-100" src="/img/mountain.jpeg">
+        <img class="object-fit-contain w-100 h-100" src="img/mountain.jpeg">
     </div>
 </div>
 
 ```html
 <div class="..." style="width: 150px; height: 150px">
-    <img class="object-fit-contain w-100 h-100" src="/img/mountain.jpeg">
+    <img class="object-fit-contain w-100 h-100" src="img/mountain.jpeg">
 </div>
 ```
 
@@ -103,13 +103,13 @@ When using `.object-fit-cover`, content will fill the content box as much as it 
 
 <div class="demo">
     <div class="bg-lighter-blue-gray striped-bg inline-block m-sm border" style="width: 150px; height: 150px">
-        <img class="object-fit-cover w-100 h-100" src="/img/mountain.jpeg">
+        <img class="object-fit-cover w-100 h-100" src="img/mountain.jpeg">
     </div>
 </div>
 
 ```html
 <div class="..." style="width: 150px; height: 150px">
-    <img class="object-fit-cover w-100 h-100" src="/img/mountain.jpeg">
+    <img class="object-fit-cover w-100 h-100" src="img/mountain.jpeg">
 </div>
 ```
 
@@ -119,13 +119,13 @@ When using `.object-fit-none`, content is not resized.
 
 <div class="demo">
     <div class="bg-lighter-blue-gray striped-bg inline-block m-sm border" style="width: 150px; height: 150px">
-        <img class="object-fit-none w-100 h-100" src="/img/mountain.jpeg">
+        <img class="object-fit-none w-100 h-100" src="img/mountain.jpeg">
     </div>
 </div>
 
 ```html
 <div class="..." style="width: 150px; height: 150px">
-    <img class="object-fit-none w-100 h-100" src="/img/mountain.jpeg">
+    <img class="object-fit-none w-100 h-100" src="img/mountain.jpeg">
 </div>
 ```
 
@@ -135,14 +135,14 @@ Using `.object-fit-scale-down` does nothing unless content is larger than conten
 
 <div class="demo">
    <div class="bg-lighter-blue-gray striped-bg inline-block m-sm border" style="width: 150px; height: 150px">
-        <img class="object-fit-scale-down w-100 h-100" src="/img/mountain.jpeg">
+        <img class="object-fit-scale-down w-100 h-100" src="img/mountain.jpeg">
     </div>
 </div>
 
 
 ```html
 <div class="..." style="width: 150px; height: 150px">
-    <img class="object-fit-scale-down w-100 h-100" src="/img/mountain.jpeg">
+    <img class="object-fit-scale-down w-100 h-100" src="img/mountain.jpeg">
 </div>
 ```
 <!-- tabs:end -->
@@ -164,46 +164,46 @@ of `left`, `right`, `top`, `bottom`, `top-left`, `top-right`, `bottom-left`, `bo
 
 <div class="demo">
     <div class="bg-lighter-blue-gray striped-bg inline-block m-sm border" style="width: 200px; height: 150px">
-        <img class="object-fit-none object-top-left w-100 h-100" src="/img/mountain.jpeg">
+        <img class="object-fit-none object-top-left w-100 h-100" src="img/mountain.jpeg">
     </div>
     <div class="bg-lighter-blue-gray striped-bg inline-block m-sm border" style="width: 200px; height: 150px">
-        <img class="object-fit-none object-top w-100 h-100" src="/img/mountain.jpeg">
+        <img class="object-fit-none object-top w-100 h-100" src="img/mountain.jpeg">
     </div>
     <div class="bg-lighter-blue-gray striped-bg inline-block m-sm border" style="width: 200px; height: 150px">
-        <img class="object-fit-none object-top-right w-100 h-100" src="/img/mountain.jpeg">
-    </div>
-    <br>
-    <div class="bg-lighter-blue-gray striped-bg inline-block m-sm border" style="width: 200px; height: 150px">
-        <img class="object-fit-none object-left w-100 h-100" src="/img/mountain.jpeg">
-    </div>
-    <div class="bg-lighter-blue-gray striped-bg inline-block m-sm border" style="width: 200px; height: 150px">
-        <img class="object-fit-none object-center w-100 h-100" src="/img/mountain.jpeg">
-    </div>
-    <div class="bg-lighter-blue-gray striped-bg inline-block m-sm border" style="width: 200px; height: 150px">
-        <img class="object-fit-none object-right w-100 h-100" src="/img/mountain.jpeg">
+        <img class="object-fit-none object-top-right w-100 h-100" src="img/mountain.jpeg">
     </div>
     <br>
     <div class="bg-lighter-blue-gray striped-bg inline-block m-sm border" style="width: 200px; height: 150px">
-        <img class="object-fit-none object-bottom-left w-100 h-100" src="/img/mountain.jpeg">
+        <img class="object-fit-none object-left w-100 h-100" src="img/mountain.jpeg">
     </div>
     <div class="bg-lighter-blue-gray striped-bg inline-block m-sm border" style="width: 200px; height: 150px">
-        <img class="object-fit-none object-bottom w-100 h-100" src="/img/mountain.jpeg">
+        <img class="object-fit-none object-center w-100 h-100" src="img/mountain.jpeg">
     </div>
     <div class="bg-lighter-blue-gray striped-bg inline-block m-sm border" style="width: 200px; height: 150px">
-        <img class="object-fit-none object-bottom-right w-100 h-100" src="/img/mountain.jpeg">
+        <img class="object-fit-none object-right w-100 h-100" src="img/mountain.jpeg">
+    </div>
+    <br>
+    <div class="bg-lighter-blue-gray striped-bg inline-block m-sm border" style="width: 200px; height: 150px">
+        <img class="object-fit-none object-bottom-left w-100 h-100" src="img/mountain.jpeg">
+    </div>
+    <div class="bg-lighter-blue-gray striped-bg inline-block m-sm border" style="width: 200px; height: 150px">
+        <img class="object-fit-none object-bottom w-100 h-100" src="img/mountain.jpeg">
+    </div>
+    <div class="bg-lighter-blue-gray striped-bg inline-block m-sm border" style="width: 200px; height: 150px">
+        <img class="object-fit-none object-bottom-right w-100 h-100" src="img/mountain.jpeg">
     </div>
 </div>
 
 ```html
-<img class="object-fit-none  object-top-left     w-100 h-100" src="/img/mountain.jpeg">
-<img class="object-fit-none  object-top          w-100 h-100" src="/img/mountain.jpeg">
-<img class="object-fit-none  object-top-right    w-100 h-100" src="/img/mountain.jpeg">
-<img class="object-fit-none  object-left         w-100 h-100" src="/img/mountain.jpeg">
-<img class="object-fit-none  object-center       w-100 h-100" src="/img/mountain.jpeg">
-<img class="object-fit-none  object-right        w-100 h-100" src="/img/mountain.jpeg">
-<img class="object-fit-none  object-bottom-left  w-100 h-100" src="/img/mountain.jpeg">
-<img class="object-fit-none  object-bottom       w-100 h-100" src="/img/mountain.jpeg">
-<img class="object-fit-none  object-bottom-right w-100 h-100" src="/img/mountain.jpeg">
+<img class="object-fit-none  object-top-left     w-100 h-100" src="img/mountain.jpeg">
+<img class="object-fit-none  object-top          w-100 h-100" src="img/mountain.jpeg">
+<img class="object-fit-none  object-top-right    w-100 h-100" src="img/mountain.jpeg">
+<img class="object-fit-none  object-left         w-100 h-100" src="img/mountain.jpeg">
+<img class="object-fit-none  object-center       w-100 h-100" src="img/mountain.jpeg">
+<img class="object-fit-none  object-right        w-100 h-100" src="img/mountain.jpeg">
+<img class="object-fit-none  object-bottom-left  w-100 h-100" src="img/mountain.jpeg">
+<img class="object-fit-none  object-bottom       w-100 h-100" src="img/mountain.jpeg">
+<img class="object-fit-none  object-bottom-right w-100 h-100" src="img/mountain.jpeg">
 ```
 
 <cssprops>

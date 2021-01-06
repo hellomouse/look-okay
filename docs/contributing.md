@@ -261,6 +261,11 @@ Once there are no style problems, run `node build.js` to run the build script. O
 
 Of course, no code is complete without documentation. Here are the steps you should follow:
 
+<div class="warn">Due to how github pages handles urls, <b>urls must be relative</b>, for example,
+<code>&lt;script src="dist/code.js"&gt;</code> over <code>&lt;script src="/dist/code.js"&gt;</code>
+<br>
+This includes image urls, css stylesheets, etc...</div>
+
 
 ### First steps
 

@@ -154,4 +154,4 @@ setInterval(() => {
         }
     }
 
-}, window.$docsify['page-toc'].sideScrollUpdateInterval)
+}, window.$docsify['page-toc'].sideScrollUpdateInterval);
